@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue/vue.js"></script>
+</head>
+<body>
+    
+    <!-- <div id="example"></div>
+
+    <div id="once">
+        <p v-once> 这个值无法改变{{a}}</p>
+        <p>Using mustaches: {{ rawHtml }}</p>
+        <p>Using v-html directive: <span v-html="rawHtml"></span></p>
+        <p>Using v-html directive: <span v-text="rawHtml">123</span></p>
+    </div>
+
+    <div id = "once">
+        <p>{{ a+1 }}</p>
+        <p>{{  ok ? "yes" : "no" }}</p>
+        <p>{{hello.split('').reverse().join('')}}</p>
+        <h1 v-bind:id ="a +'1'">test</h1>
+
+        <h1 v-bind:[attribute] = "a+1">id为</h1>
+    </div> -->
+
+    <!-- 计算属性 -->
+    <div id = "example">
+        <p>原句:{{fullName}}</p>
+        <p>翻转:{{reversedFull}}</p>
+    </div>
+
+<script>
+ 
+
+
+
+    var vm = new Vue({
+        el:"#example",
+        data:{
+            message:"泽塔",
+            firstName:"泽",
+            lastName:"塔",
+        },
+        computed:{
+            reversedFull:function(){
+                return this.nameReverse(this.fullName)
+            },
+            fullName:{
+                //get fullName时候return的
+                get:function(){
+                    return this.firstName + " " +this.lastName
+                },
+                //setfullname时执行函数,参数为改变后的fullName
+                set:function(newValue){
+                    //修改全名后firstname和lastname也会发生改变
+                    var names = newValue.split(" ")
+                    this.firstName= names[0];
+                    this.lastName = names[names.length - 1]
+                }
+            }
+        },
+        methods:{
+            nameReverse:function(name){
+                return name.split("").reverse().join("")
+            }
+        },
+        watch:{
+            fullName:function(newVal,oldVal){
+                console.log(`你把${oldVal}改成了${newVal}`);
+            }
+        }
+    })
+    
+    // var data1 = {a:1}
+    // var vm = new Vue({
+    //     el:"#example",
+    //     data:data1
+    // })
+
+    // var vm = new Vue({
+    //     el:"#once",
+    //     data:{
+    //         a:1,
+    //         ok:true,
+    //         attribute:"i",
+    //         hello:"hello",
+    //         rawHtml:"<h1>这里是h1</h1>"
+    //     },
+        //创建时就会执行的函数
+        // created:function(){
+        //     //生命周期钩子中的this指的是这个vm实例
+        //     console.log("a is:" + this.a)
+        // }
+    // })
+
+</script>
+</body>
+</html>

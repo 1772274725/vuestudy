@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../vue/vue.js"></script>
+</head>
+<body>
+    <div id = "if-example">
+        <h1 v-if="oh === 1">T1时</h1>
+        <h1 v-else-if="oh===2">T2时</h1>
+        <h1 v-else-if="oh===3">T3时</h1>
+        <h1 v-else="oh===4">T4时</h1>
+        
+        <template v-if="loginType === 'username'">
+            <label>Username</label>
+            <input placeholder = "输入用户名" key = 2>
+        </template>
+        <template v-else>
+            <label>Email</label>
+            <input placeholder = "输入邮箱"  key =3>
+        </template>
+    </div>
+
+    <script>
+        var vm = new Vue({
+        el:"#if-example",
+        data:{
+            loginType:"username",
+            oh:2,
+        }
+    })
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script src="../vue/vue.js"></script>
+        <!-- <script src="./hello.js"></script> -->
+</head>
+<body>
+    <div id="app1">
+        {{message}}
+    </div>
+
+    <div id="app-2">
+        <!--v-bind 绑定将ttitle属性和vuedata的message属性保持一致-->
+        <span v-bind:title ="message">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+    </div>
+    
+    <div id="app-3">
+        <p v-if = "seen">我看到你了</p>
+    </div>
+
+    <div id="app-4">
+        <ol>
+            <li v-for = "todo in todos">
+                {{todo.text}}
+            </li>
+        </ol>
+    </div>
+
+    <div id="app-5">
+        <p>{{message}}</p>
+        <button v-on:click="reverseMessage">翻转消息</button>
+    </div>
+
+    <div id="app-6">
+        <p>{{message}}</p>
+        <!-- v-model可以将数据与输入双向绑定，改变inpt显示的数据也会改变 -->
+        <input v-model="message">
+    </div>
+
+    <!-- 组件必须夹在与vue对象绑定的div中 -->
+    <div id="app-7">
+        <!-- 使用组件 -->
+        <todo-list></todo-list>
+
+        <ol>
+            <!-- props中的todo接受了父组件传来的item给template -->
+            <todo-item 
+            v-for="item in list"
+            v-bind:todo="item"
+            v-bind:key="item.id"
+
+            ></todo-item>
+        </ol>
+       
+    </div>
+
+    <script >
+            // 定义名为 todo-item 的新组件
+        Vue.component("todo-list",{
+            template:"<h1>这是组件</h1>"
+        })
+            //子组件
+        Vue.component("todo-item",{
+            // 通过prop来接受父组件传递给子组件的值
+            //prop中的值等于子组件中同名的属性
+            props:["todo"],
+            //template可以使用props中属性收到的值
+            template:"<li>{{todo.text}}</li>"
+        })
+
+        var app7 = new Vue({
+            //父组件
+            el:"#app-7",
+            data:{
+                list:[
+                    {id:0,text:"打工"},
+                    {id:1,text:"干活"},
+                    {id:2,text:"加班"},
+                ]
+            }
+        })
+
+
+        var app =new Vue({
+            // 这个的el 绑定id对象
+            el:"#app1",
+            data:{
+                message:"Hello Vue"
+            }
+        })
+
+        var app2 = new Vue({
+            el:"#app-2",
+            data:{
+                message:"页面加载在" + new Date().toLocaleString()
+            }
+        })
+
+        var app3 = new Vue({
+            el:"#app-3",
+            data:{
+                message:2,
+                seen:true,
+            }
+        })
+
+        var app4 = new Vue({
+            el:"#app-4",
+            data:{
+                todos:[
+                    {text:"打工"},
+                    {text:"加班"},
+                    {text:"996"}
+                ]
+            }
+        })
+
+        var app5 = new Vue({
+            el:"#app-5",
+            data:{
+                message:"hellow vue"
+            },
+            methods:{
+                reverseMessage:function(){
+                    //此处this为所选的对象app5
+                    this.message=this.message.split("").reverse().join("")
+                }
+            }
+        })
+
+        var app6 = new Vue({
+            el:"#app-6",
+            data:{
+                message:2
+            }
+        })
+    </script>
+</body>
+</html>

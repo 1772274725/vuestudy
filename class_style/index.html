@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src ="../vue/vue.js"></script>
+</head>
+<body>
+    <!-- active这个class存在与否决定于isActive属性的true和false -->
+    <div id="st">
+    <div v-bind:class="[activeClass,errorClass,isActive ? 'a':'b']" >不会错</div>
+
+    <div class = static v-bind:class = "classObject"
+    >也不错</div>
+    
+    </div>
+
+    <script>
+        var st = new Vue({
+            el:"#st",
+            data:{
+               activeClass:"active",
+               errorClass:"text-danger",
+               isActive:true,
+            },
+            // 绑定一个计算属性
+            computed:{
+                classObject:function(){
+                    return{
+                        active: this.isActive !== this.error,
+                        "text-tang":this.error ==true
+                    }
+                }
+            }
+
+        })
+
+    </script>
+</body>
+</html>
